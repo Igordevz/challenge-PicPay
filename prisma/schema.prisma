@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String    @id @default(uuid())
+  name     String
+  cpf      String    @unique
+  email    String    @unique
+  password String
+  balance  Int
+  History  History[]
+}
+
+model TransferReceveid {
+  id        Int      @id @default(autoincrement())
+  historyId Int
+  value     Int
+  name      String
+  cpf       String
+  date      DateTime @default(now())
+  transfer  History  @relation(fields: [historyId], references: [id])
+  type      String
+
+  @@map("transfer_received")
+}
+
+model TransferSend {
+  id        Int      @id @default(autoincrement())
+  historyId Int
+  value     Int
+  name      String
+  cpf       String
+  type      String
+  date      DateTime @default(now())
+  transfer  History  @relation(fields: [historyId], references: [id])
+
+  @@map("transfer_send")
+}
+
+model History {
+  id               Int                @id @default(autoincrement())
+  userId           String?
+  User             User?              @relation(fields: [userId], references: [id])
+  trasnferReceived TransferReceveid[]
+  TransferSend     TransferSend[]
+}

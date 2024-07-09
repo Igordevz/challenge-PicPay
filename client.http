@@ -1,0 +1,18 @@
+POST http://localhost:8080/api/users 
+Content-Type: application/json
+
+{
+  "name":"Igor Mateus Santos Silva",
+  "cpf": "0000000000",
+  "password": "1482912829",
+  "email": "igortza.98483@gmail.com"
+}
+###
+POST http://localhost:8080/transfer 
+Content-Type: application/json
+
+{
+  "userId": "b1d12e33-c722-4e0e-9cce-491cff9de40e",
+  "cpf": "12836524561",
+  "value": 500
+}
